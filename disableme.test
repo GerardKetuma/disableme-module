@@ -1,1 +1,31 @@
 <?php
+/**
+ * @file
+ * Run tests for the disableme module
+ */
+
+class DisableMeTesting extends DrupalWebTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => 'DisableMe Test Block',
+      'description' => 'Tests for the DisableMe module',
+      'group' => 'DisableMe',
+    );
+  }
+  
+  public function testForBlockInfo() {
+    $result = module_invoke('disableme', 'block_info');
+    
+    $this->assertTrue(isset($result['disabled_modules']), 
+        t('Disabled Modules block contains referenced modules.'));
+    $this->assertEqual(1, count($result), t('Module exposes a block.'));
+  }
+  
+  public function testForBlockView() {
+    $result = module_invoke('disableme', 'block_view', 'disabled_modules');
+    
+    $this->assertEqual(t('Development Modules'), $result['subject'], 
+        t('The subject of the block has been set'));
+    $this->assertTrue(is_array($result), t('Block returns a renderable array'));
+  }
+}
