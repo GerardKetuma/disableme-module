@@ -1,9 +1,8 @@
-name = disableme
-description = 
+name = DisableMe
+description = A module to enable us disable development modules
 core = 7.x
-package = 
-php = 
-version =
-dependencies[] = 
-files[] = 
-configure = 
+package = Development
+php = 5.2
+version = 7.x-1.0
+files[] = disableme.module
+files[] = disableme.test
