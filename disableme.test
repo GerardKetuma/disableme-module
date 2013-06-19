@@ -13,6 +13,9 @@ class DisableMeTesting extends DrupalWebTestCase {
     );
   }
   
+  /**
+   * Test for hook_block_info().
+   */
   public function testForBlockInfo() {
     $result = module_invoke('disableme', 'block_info');
     
@@ -21,6 +24,9 @@ class DisableMeTesting extends DrupalWebTestCase {
     $this->assertEqual(1, count($result), t('Module exposes a block.'));
   }
   
+  /**
+   * Test for hook_block_view().
+   */
   public function testForBlockView() {
     $result = module_invoke('disableme', 'block_view', 'disabled_modules');
     
