@@ -1,1 +1,74 @@
 <?php
+// $Id$
+
+/**
+ * @file
+ * 
+ * A module to demonstrate TDD principles in drupal.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function disableme_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#disableme':
+      return '<p>' . t('Demonstrating the principles of TDD.') . '</p>';
+  }
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function disableme_block_info() {
+  $blocks['disabled_modules'] = array(
+    'info' => t('Disabled Modules')
+  );
+  
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function disableme_block_view($delta = '') {
+  $block = array();
+  
+  switch ($delta) {
+    case 'disabled_modules':
+      $block['subject'] = t('Development Modules');
+      $block['content'] = array(
+        '#theme' => 'item_list',
+        '#items' => disableme_show_modules(),
+        '#type' => 'ul'
+      );
+      break;
+
+    default:
+      break;
+  }
+  
+  return $block;
+}
+
+/**
+ * Function to return the list of test modules to display in the block.
+ */
+function disableme_show_modules() {
+  $modules_list = module_list();
+  $data = array();
+  
+  if(array_key_exists('devel', $modules_list)) {
+    array_push($data, 'Devel Module is Active');
+  }
+  
+  if(array_key_exists('coder', $modules_list)) {
+    array_push($data, 'Coder Module is Active');
+  }
+  
+  if(array_key_exists('devel_themer', $modules_list)) {
+    array_push($data, 'Themer Module is Active');
+  }
+  
+  return $data;
+}
